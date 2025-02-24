@@ -1,0 +1,299 @@
+[
+  {
+    "name": "Tomato",
+    "scientificName": "Solanum lycopersicum",
+    "growingConditions": "Full Sun, Well-drained soil, pH 6.0-6.8",
+    "fertilizers": [
+      {
+        "name": "Compost",
+        "type": "Organic",
+        "npkRatio": "5-10-5",
+        "purpose": "Boost Growth"
+      },
+      {
+        "name": "Calcium Nitrate",
+        "type": "Synthetic",
+        "npkRatio": "15.5-0-0",
+        "purpose": "Improve Fruit Quality"
+      }
+    ],
+    "pesticides": [
+      {
+        "name": "Neem Oil",
+        "type": "Natural",
+        "targetPests": "Aphids, Whiteflies",
+        "modeOfAction": "Repellent"
+      },
+      {
+        "name": "Imidacloprid",
+        "type": "Insecticide",
+        "targetPests": "Leaf Miners",
+        "modeOfAction": "Systemic"
+      }
+    ]
+  },
+  {
+    "name": "Wheat",
+    "scientificName": "Triticum aestivum",
+    "growingConditions": "Full Sun, Loamy soil, pH 6.0-7.5",
+    "fertilizers": [
+      {
+        "name": "Urea",
+        "type": "Synthetic",
+        "npkRatio": "46-0-0",
+        "purpose": "Nitrogen Supply"
+      },
+      {
+        "name": "DAP",
+        "type": "Synthetic",
+        "npkRatio": "18-46-0",
+        "purpose": "Root Development"
+      }
+    ],
+    "pesticides": [
+      {
+        "name": "Malathion",
+        "type": "Insecticide",
+        "targetPests": "Aphids, Armyworms",
+        "modeOfAction": "Contact Poison"
+      },
+      {
+        "name": "Mancozeb",
+        "type": "Fungicide",
+        "targetPests": "Rust, Blight",
+        "modeOfAction": "Protective"
+      }
+    ]
+  },
+  {
+    "name": "Rice",
+    "scientificName": "Oryza sativa",
+    "growingConditions": "Partial Sun, Clayey soil, pH 5.5-6.5",
+    "fertilizers": [
+      {
+        "name": "NPK 20-20-20",
+        "type": "Synthetic",
+        "npkRatio": "20-20-20",
+        "purpose": "Balanced Growth"
+      },
+      {
+        "name": "Urea",
+        "type": "Synthetic",
+        "npkRatio": "46-0-0",
+        "purpose": "Boost Tillering"
+      }
+    ],
+    "pesticides": [
+      {
+        "name": "Chlorpyrifos",
+        "type": "Insecticide",
+        "targetPests": "Stem Borers",
+        "modeOfAction": "Nerve Agent"
+      },
+      {
+        "name": "Carbendazim",
+        "type": "Fungicide",
+        "targetPests": "Sheath Blight",
+        "modeOfAction": "Systemic"
+      }
+    ]
+  },
+    {
+    "name": "Maize",
+    "scientificName": "Zea mays",
+    "growingConditions": "Full Sun, Well-drained soil, pH 5.5-7.0",
+    "fertilizers": [
+      {
+        "name": "Urea",
+        "type": "Synthetic",
+        "npkRatio": "46-0-0",
+        "purpose": "Boost Vegetative Growth"
+      },
+      {
+        "name": "Muriate of Potash",
+        "type": "Synthetic",
+        "npkRatio": "0-0-60",
+        "purpose": "Improve Grain Quality"
+      }
+    ],
+    "pesticides": [
+      {
+        "name": "Atrazine",
+        "type": "Herbicide",
+        "targetPests": "Broadleaf Weeds",
+        "modeOfAction": "Pre-emergence Control"
+      },
+      {
+        "name": "Carbaryl",
+        "type": "Insecticide",
+        "targetPests": "Corn Borers",
+        "modeOfAction": "Contact Poison"
+      }
+    ]
+  },
+  {
+    "name": "Cotton",
+    "scientificName": "Gossypium hirsutum",
+    "growingConditions": "Full Sun, Sandy loam soil, pH 5.8-8.0",
+    "fertilizers": [
+      {
+        "name": "Ammonium Nitrate",
+        "type": "Synthetic",
+        "npkRatio": "33-0-0",
+        "purpose": "Enhance Leaf Growth"
+      },
+      {
+        "name": "Super Phosphate",
+        "type": "Synthetic",
+        "npkRatio": "0-20-0",
+        "purpose": "Root Development"
+      }
+    ],
+    "pesticides": [
+      {
+        "name": "Monocrotophos",
+        "type": "Insecticide",
+        "targetPests": "Bollworms",
+        "modeOfAction": "Systemic"
+      },
+      {
+        "name": "Chlorpyrifos",
+        "type": "Insecticide",
+        "targetPests": "Aphids",
+        "modeOfAction": "Contact Poison"
+      }
+    ]
+  },
+  {
+    "name": "Groundnut",
+    "scientificName": "Arachis hypogaea",
+    "growingConditions": "Full Sun, Sandy loam soil, pH 5.9-7.0",
+    "fertilizers": [
+      {
+        "name": "Gypsum",
+        "type": "Mineral",
+        "npkRatio": "0-0-0",
+        "purpose": "Promote Pod Development"
+      },
+      {
+        "name": "Calcium Ammonium Nitrate",
+        "type": "Synthetic",
+        "npkRatio": "27-0-0",
+        "purpose": "Improve Growth"
+      }
+    ],
+    "pesticides": [
+      {
+        "name": "Dimethoate",
+        "type": "Insecticide",
+        "targetPests": "Aphids, Thrips",
+        "modeOfAction": "Systemic"
+      },
+      {
+        "name": "Chlorothalonil",
+        "type": "Fungicide",
+        "targetPests": "Leaf Spot",
+        "modeOfAction": "Protective"
+      }
+    ]
+  },
+  {
+    "name": "Soybean",
+    "scientificName": "Glycine max",
+    "growingConditions": "Full Sun, Well-drained soil, pH 6.0-6.8",
+    "fertilizers": [
+      {
+        "name": "Potash",
+        "type": "Synthetic",
+        "npkRatio": "0-0-60",
+        "purpose": "Improve Seed Quality"
+      },
+      {
+        "name": "Rock Phosphate",
+        "type": "Organic",
+        "npkRatio": "0-30-0",
+        "purpose": "Root Development"
+      }
+    ],
+    "pesticides": [
+      {
+        "name": "Lambda-Cyhalothrin",
+        "type": "Insecticide",
+        "targetPests": "Aphids, Beetles",
+        "modeOfAction": "Contact Poison"
+      },
+      {
+        "name": "Flutriafol",
+        "type": "Fungicide",
+        "targetPests": "Rust",
+        "modeOfAction": "Systemic"
+      }
+    ]
+  },
+  {
+    "name": "Potato",
+    "scientificName": "Solanum tuberosum",
+    "growingConditions": "Cool Climate, Well-drained soil, pH 5.0-6.5",
+    "fertilizers": [
+      {
+        "name": "Potassium Sulfate",
+        "type": "Synthetic",
+        "npkRatio": "0-0-50",
+        "purpose": "Improve Tuber Quality"
+      },
+      {
+        "name": "Ammonium Sulfate",
+        "type": "Synthetic",
+        "npkRatio": "21-0-0",
+        "purpose": "Nitrogen Supply"
+      }
+    ],
+    "pesticides": [
+      {
+        "name": "Cypermethrin",
+        "type": "Insecticide",
+        "targetPests": "Cutworms, Aphids",
+        "modeOfAction": "Contact & Stomach Poison"
+      },
+      {
+        "name": "Metalaxyl",
+        "type": "Fungicide",
+        "targetPests": "Late Blight",
+        "modeOfAction": "Systemic"
+      }
+    ]
+  },
+  {
+    "name": "Sugarcane",
+    "scientificName": "Saccharum officinarum",
+    "growingConditions": "Full Sun, Fertile soil, pH 6.5-7.5",
+    "fertilizers": [
+      {
+        "name": "Single Super Phosphate",
+        "type": "Synthetic",
+        "npkRatio": "0-16-0",
+        "purpose": "Root Development"
+      },
+      {
+        "name": "Potash",
+        "type": "Synthetic",
+        "npkRatio": "0-0-60",
+        "purpose": "Boost Sugar Content"
+      }
+    ],
+    "pesticides": [
+      {
+        "name": "Endosulfan",
+        "type": "Insecticide",
+        "targetPests": "Top Borer",
+        "modeOfAction": "Contact Poison"
+      },
+      {
+        "name": "Carbofuran",
+        "type": "Insecticide",
+        "targetPests": "Root Grubs",
+        "modeOfAction": "Systemic"
+      }
+    ]
+  }
+]

@@ -1,0 +1,21 @@
+Plant,Scientific Name,Growing Conditions,Fertilizer Name,Fertilizer Type,NPK Ratio,Fertilizer Purpose,Pesticide Name,Pesticide Type,Target Pests/Diseases,Mode of Action
+Rice,Oryza sativa,"Warm, humid, flooded fields",Urea,Inorganic,46-0-0,Nitrogen supply for leaf growth,Chlorpyrifos,Insecticide,"Stem borers, leaf folders",Nerve agent
+Wheat,Triticum aestivum,"Cool temperatures, well-drained soil",DAP,Inorganic,18-46-0,Root development & grain filling,Mancozeb,Fungicide,"Rust, blight, mildew",Inhibits fungal spore growth
+Maize,Zea mays,"Warm, loamy soil",NPK (20:20:0),Inorganic,20-20-0,Balanced nutrient supply,Imidacloprid,Insecticide,"Shoot fly, stem borer",Blocks nerve signals
+Sugarcane,Saccharum officinarum,"Tropical, fertile soil",Potash,Inorganic,0-0-60,Enhances sugar content,Dimethoate,Insecticide,"Aphids, borers",Disrupts nervous system
+Cotton,Gossypium hirsutum,"Hot, arid, black soil",NPK (12:32:16),Inorganic,12-32-16,Root and flower development,Quinalphos,Insecticide,"Bollworms, jassids",Acetylcholinesterase inhibitor
+Tomato,Solanum lycopersicum,"Warm, well-drained soil",Vermicompost,Organic,-,Improves soil fertility,Copper Oxychloride,Fungicide,"Blight, leaf spot",Disrupts cell membrane
+Potato,Solanum tuberosum,"Cool, well-drained soil",SSP,Inorganic,0-16-0,Boosts tuber formation,Mancozeb,Fungicide,Late blight,Inhibits fungal respiration
+Brinjal,Solanum melongena,"Warm, sandy loam soil",NPK (10:26:26),Inorganic,10-26-26,Boosts fruiting,Acephate,Insecticide,"Aphids, jassids",Inhibits acetylcholinesterase
+Onion,Allium cepa,"Cool, sandy soil",Bone Meal,Organic,3-15-0,Enhances bulb growth,Monocrotophos,Insecticide,"Thrips, aphids",Neurotoxin
+Banana,Musa paradisiaca,"Tropical, clay-loamy soil",NPK (8:12:8),Inorganic,8-12-8,Promotes leaf and fruit growth,Carbendazim,Fungicide,"Panama disease, leaf spot",Inhibits fungal mitosis
+Mango,Mangifera indica,"Tropical, well-drained soil",Farmyard Manure,Organic,-,Improves soil structure,Imidacloprid,Insecticide,"Hoppers, mealybugs",Nerve signal blocker
+Coconut,Cocos nucifera,"Coastal, sandy loam soil",Neem Cake,Organic,-,Improves root health,Carbaryl,Insecticide,"Rhinoceros beetle, mites",Inhibits acetylcholinesterase
+Tea,Camellia sinensis,"Cool, acidic soil",SSP,Inorganic,0-16-0,Enhances leaf quality,Hexaconazole,Fungicide,"Blister blight, root rot",Inhibits ergosterol synthesis
+Coffee,Coffea arabica,"Humid, well-drained soil",NPK (15:15:15),Inorganic,15-15-15,Boosts flowering & berry size,Copper Oxychloride,Fungicide,"Leaf rust, berry disease",Disrupts fungal cell membrane
+Groundnut,Arachis hypogaea,"Warm, sandy loam soil",Gypsum,Inorganic,Ca-S,Enhances pod development,Mancozeb,Fungicide,Tikka leaf spot,Inhibits fungal respiration
+Soybean,Glycine max,"Warm, fertile loamy soil",SSP,Inorganic,0-16-0,Enhances root nodulation,Hexaconazole,Fungicide,"Rust, stem rot",Inhibits fungal sterol synthesis
+Mustard,Brassica juncea,"Cool, loamy soil",Urea,Inorganic,46-0-0,Promotes leaf and seed growth,Malathion,Insecticide,"Aphids, flea beetles",Acetylcholinesterase inhibitor
+Chickpea,Cicer arietinum,"Cool, black soil",DAP,Inorganic,18-46-0,Enhances flowering,Mancozeb,Fungicide,"Wilt, blight",Inhibits fungal respiration
+Turmeric,Curcuma longa,"Warm, sandy loam soil",Farmyard Manure,Organic,-,Enhances rhizome development,Carbendazim,Fungicide,"Leaf spot, rhizome rot",Inhibits fungal mitosis
+Ginger,Zingiber officinale,"Warm, well-drained soil",Vermicompost,Organic,-,Improves soil texture,Copper Oxychloride,Fungicide,"Bacterial wilt, leaf spot",Disrupts fungal membrane
