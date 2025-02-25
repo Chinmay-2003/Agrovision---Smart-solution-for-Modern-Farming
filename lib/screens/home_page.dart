@@ -122,31 +122,54 @@
                               'Hello!',
                               style: TextStyle(
                                 fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
-                            const SizedBox(height: 8),
-                            ShaderMask(
-                              shaderCallback: (bounds) => const LinearGradient(
-                                colors: [
-                                  Colors.purple,
-                                  Colors.blue,
-                                  Colors.green,
-                                ],
-                              ).createShader(bounds),
-                              child: Text(
-                                widget.username,
-                                style: const TextStyle(
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                          ),
+                          const SizedBox(height: 8),
+                          ShaderMask(
+                            shaderCallback: (bounds) => const LinearGradient(
+                              colors: [
+                                Colors.purple,
+                                Colors.blue,
+                                Colors.green,
+                              ],
+                            ).createShader(bounds),
+                            child: Column( // Wrap with Column for multiple children
+                              children: [
+                                Text(
+                                  widget.username,
+                                  style: const TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(height: 8), // Now correctly placed
+                                ShaderMask(
+                                  shaderCallback: (bounds) => const LinearGradient(
+                                    colors: [
+                                      Colors.purple,
+                                      Colors.blue,
+                                      Colors.green,
+                                    ],
+                                  ).createShader(bounds),
+                                  child: Text(
+                                    widget.username,
+                                    style: const TextStyle(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),  
+                        ],
+                
                       ),
+                    ),
                       Container(
                         width: 150,
                         height: 150,

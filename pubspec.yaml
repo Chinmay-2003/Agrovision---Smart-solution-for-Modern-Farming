@@ -21,6 +21,7 @@ dependencies:
   google_mlkit_image_labeling: ^0.13.0
   path_provider: 
   path:
+  file_selector: ^1.0.3
 
 dev_dependencies:
   flutter_test:
