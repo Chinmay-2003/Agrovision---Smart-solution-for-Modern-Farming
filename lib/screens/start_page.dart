@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'signin_page.dart';
+import '../services/notification_service.dart'; // <-- Import your service
 
 class StartPage extends StatelessWidget {
   const StartPage({super.key});
@@ -58,6 +59,16 @@ class StartPage extends StatelessWidget {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.purple,
+        child: const Icon(Icons.notifications),
+        onPressed: () {
+          NotificationService.showNotification(
+            title: '🌧️ Rain Alert',
+            body: 'Heavy rain expected in your area tomorrow. Prepare your fields!',
+          );
+        },
       ),
     );
   }

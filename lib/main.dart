@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart'; // 👈 Add this
 import 'screens/start_page.dart';
+import 'services/notification_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.init(); // 🔔 Initialize notifications
   runApp(const AgrovisionApp());
 }
 
@@ -29,11 +33,9 @@ class AgrovisionApp extends StatelessWidget {
             ),
           ),
         ),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.white),
-          bodyMedium: TextStyle(color: Colors.white),
-          titleLarge: TextStyle(color: Colors.white),
-        ),
+        textTheme: GoogleFonts.robotoTextTheme(
+          Theme.of(context).textTheme,
+        ).apply(bodyColor: Colors.white), // 👈 Apply white color globally
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: Colors.grey[900],
@@ -53,6 +55,7 @@ class AgrovisionApp extends StatelessWidget {
         ),
       ),
       home: const StartPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -6,17 +6,20 @@ plugins {
 }
 
 android {
-    namespace = "com.example.agrovision"
+    namespace = "com.example.agrovision" // Ensure the namespace is set correctly for the application
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+        // Keep this line you added earlier
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        // Ensure jvmTarget is set to 1.8 if using Java 8 compatibility
+        jvmTarget = '1.8' // Corrected from JavaVersion.VERSION_1_8 to string '1.8' which is common practice
     }
 
     defaultConfig {
@@ -28,6 +31,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // Enable multidex if needed, especially with desugaring
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -41,4 +46,19 @@ android {
 
 flutter {
     source = "../.."
+}
+
+// Added dependencies block
+dependencies {
+    // Flutter requires the Kotlin standard library
+    // Note: $kotlin_version comes from the top-level build.gradle
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Add this line for the desugaring library needed by flutter_local_notifications
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4' // Use a recent version
+
+    // Add multidex dependency if you enabled it in defaultConfig
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    // You might add other app-specific Android dependencies here in the future
 }

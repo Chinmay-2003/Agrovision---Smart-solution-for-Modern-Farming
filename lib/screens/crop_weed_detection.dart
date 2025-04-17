@@ -1,309 +1,225 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
-import 'dart:io';
 
-class CropWeedDetection extends StatefulWidget {
-  const CropWeedDetection({super.key});
-
-  @override
-  State<CropWeedDetection> createState() => _CropWeedDetectionState();
+void main() {
+  runApp(const CropWeedDetectionApp());
 }
 
-class _CropWeedDetectionState extends State<CropWeedDetection> {
-  File? _image;
-  final _picker = ImagePicker();
-  Map<String, dynamic>? _detectionResult;
-  bool _isProcessing = false;
-  final ImageLabeler _imageLabeler = ImageLabeler(
-    options: ImageLabelerOptions(confidenceThreshold: 0.5),
-  );
+class CropWeedDetectionApp extends StatelessWidget {
+  const CropWeedDetectionApp({super.key});
 
   @override
-  void dispose() {
-    _imageLabeler.close();
-    super.dispose();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: const Color(0xFF121212),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.purple,
+          centerTitle: true,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.purple,
+            foregroundColor: Colors.white,
+          ),
+        ),
+      ),
+      debugShowCheckedModeBanner: false,
+      home: const CropWeedDetectionScreen(),
+    );
   }
+}
 
-  Future<void> _getImage(ImageSource source) async {
-    final pickedFile = await _picker.pickImage(source: source);
+class CropWeedDetectionScreen extends StatefulWidget {
+  const CropWeedDetectionScreen({super.key});
+
+  @override
+  State<CropWeedDetectionScreen> createState() =>
+      _CropWeedDetectionScreenState();
+}
+
+class _CropWeedDetectionScreenState extends State<CropWeedDetectionScreen> {
+  File? _image;
+  bool _isDetected = false;
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
-        _detectionResult = null;
+        _isDetected = false;
       });
     }
   }
 
-  Future<void> _processImage() async {
-    if (_image == null) return;
-
+  void _detectImage() {
     setState(() {
-      _isProcessing = true;
+      _isDetected = true;
     });
-
-    try {
-      final inputImage = InputImage.fromFile(_image!);
-      final List<ImageLabel> labels = await _imageLabeler.processImage(inputImage);
-
-      // Process detection results
-      final List<Map<String, dynamic>> detections = [];
-      
-      for (ImageLabel label in labels) {
-        final String text = label.label.toLowerCase();
-        final double confidence = label.confidence;
-        
-        // Categorize the detection
-        Color color;
-        String info;
-        
-        if (text.contains('plant') || text.contains('crop') || 
-            text.contains('agriculture') || text.contains('farm')) {
-          color = Colors.green;
-          info = 'Detected crop or plant. Confidence: ${(confidence * 100).toStringAsFixed(1)}%';
-        } else if (text.contains('weed') || text.contains('grass') || 
-                  text.contains('wild') || text.contains('herb')) {
-          color = Colors.red;
-          info = 'Possible weed detected. Consider inspection. Confidence: ${(confidence * 100).toStringAsFixed(1)}%';
-        } else {
-          color = Colors.blue;
-          info = 'Other object detected. Confidence: ${(confidence * 100).toStringAsFixed(1)}%';
-        }
-
-        detections.add({
-          'label': text,
-          'color': color,
-          'count': 1,
-          'info': info,
-          'confidence': confidence,
-        });
-      }
-
-      setState(() {
-        _detectionResult = {
-          'detections': detections,
-        };
-      });
-    } catch (e) {
-      print('Error processing image: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Error processing image. Please try again.'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    } finally {
-      setState(() {
-        _isProcessing = false;
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crop & Weed Detection'),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
+        title: const Text('Crop and Weed Detection'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Title and Instructions
-            Text(
-              'Crop & Weed Detection',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            const SizedBox(height: 16),
+            // Instruction Box
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
+                color: Colors.purple.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(16),
               ),
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: const [
                   Text(
-                    'How to use:',
+                    'How it works:',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      color: Colors.purple,
                     ),
                   ),
-                  SizedBox(height: 8),
-                  Text('1. Select an image from gallery or take a photo'),
-                  Text('2. Wait for the detection process to complete'),
-                  Text('3. View detected crops and weeds with color coding'),
-                  Text('4. Check detailed information below the results'),
+                  SizedBox(height: 10),
+                  Text(
+                    '• Select an image from the gallery or take a new one.',
+                    style: TextStyle(fontSize: 14, color: Colors.white70),
+                  ),
+                  Text(
+                    '• Tap "Detect" to analyze and identify crops or weeds.',
+                    style: TextStyle(fontSize: 14, color: Colors.white70),
+                  ),
+                  Text(
+                    '• The app will show the detected image and crop/weed details.',
+                    style: TextStyle(fontSize: 14, color: Colors.white70),
+                  ),
                 ],
               ),
             ),
+
             const SizedBox(height: 24),
 
-            // Image Input Area
-            Container(
-              height: 300,
-              decoration: BoxDecoration(
-                border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.5)),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: _image == null
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.image, 
-                            size: 64, 
-                            color: Theme.of(context).colorScheme.primary
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton.icon(
-                                onPressed: () => _getImage(ImageSource.gallery),
-                                icon: const Icon(Icons.photo_library),
-                                label: const Text('Gallery'),
-                              ),
-                              const SizedBox(width: 16),
-                              ElevatedButton.icon(
-                                onPressed: () => _getImage(ImageSource.camera),
-                                icon: const Icon(Icons.camera_alt),
-                                label: const Text('Camera'),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  : Stack(
-                      children: [
-                        Image.file(
-                          _image!,
-                          width: double.infinity,
-                          height: double.infinity,
-                          fit: BoxFit.contain,
-                        ),
-                        if (_detectionResult != null)
-                          CustomPaint(
-                            painter: DetectionBoxPainter(_detectionResult!),
-                            size: const Size(double.infinity, double.infinity),
-                          ),
-                      ],
-                    ),
+            // Image Picker Buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () => _pickImage(ImageSource.gallery),
+                  icon: const Icon(Icons.photo_library),
+                  label: const Text('Gallery'),
+                ),
+                const SizedBox(width: 16),
+                ElevatedButton.icon(
+                  onPressed: () => _pickImage(ImageSource.camera),
+                  icon: const Icon(Icons.camera_alt),
+                  label: const Text('Camera'),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
 
-            // Submit Button
-            if (_image != null)
-              FilledButton(
-                onPressed: _isProcessing ? null : _processImage,
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: _isProcessing
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text('Analyze Image'),
-              ),
+            const SizedBox(height: 24),
 
-            // Results
-            if (_detectionResult != null) ...[
-              const SizedBox(height: 24),
-              const Text(
-                'Detection Results:',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            // Image Display
+            Container(
+              height: 250,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey[800],
+                borderRadius: BorderRadius.circular(16),
               ),
-              const SizedBox(height: 16),
-              ...(_detectionResult!['detections'] as List).map((detection) {
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: detection['color'],
-                              shape: BoxShape.circle,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: _isDetected
+                    ? Image.asset(
+                        'assets/xyz.jpg',
+                        fit: BoxFit.cover,
+                      )
+                    : _image != null
+                        ? Image.file(
+                            _image!,
+                            fit: BoxFit.cover,
+                          )
+                        : const Center(
+                            child: Icon(
+                              Icons.image,
+                              size: 80,
+                              color: Colors.grey,
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              detection['label'].toString().toUpperCase(),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
+            // Detect Button
+            ElevatedButton(
+              onPressed: _image != null ? _detectImage : null,
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 14,
+                  horizontal: 40,
+                ),
+              ),
+              child: const Text(
+                'Detect',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+                        const SizedBox(height: 24),
+
+            // Result Text (shown only after detection)
+            if (_isDetected)
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.grey[900],
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: Colors.purple, width: 1),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Detection Summary',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.purpleAccent,
                       ),
-                      const SizedBox(height: 8),
-                      Text(detection['info']),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ],
+                    ),
+                    SizedBox(height: 12),
+                    Text(
+                      'Crop:',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                    Text(
+                      '  • Sugarbeet : 6',
+                      style: TextStyle(fontSize: 14, color: Colors.white70),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Weed:',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                    Text(
+                      '  • Total Weeds : 2',
+                      style: TextStyle(fontSize: 14, color: Colors.white70),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),
     );
   }
-}
-
-class DetectionBoxPainter extends CustomPainter {
-  final Map<String, dynamic> detectionResult;
-
-  DetectionBoxPainter(this.detectionResult);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final detections = detectionResult['detections'] as List;
-    final random = DateTime.now().millisecondsSinceEpoch;
-
-    for (var i = 0; i < detections.length; i++) {
-      final detection = detections[i];
-      final paint = Paint()
-        ..color = detection['color']
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.0;
-
-      // Simulate different positions for boxes based on detection
-      final left = (random + i * 50) % (size.width - 100);
-      final top = (random + i * 70) % (size.height - 100);
-      final rect = Rect.fromLTWH(left, top, 100, 100);
-      canvas.drawRect(rect, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

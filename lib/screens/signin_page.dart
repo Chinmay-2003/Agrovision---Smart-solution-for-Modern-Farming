@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'home_page.dart';
 
 class SignInPage extends StatefulWidget {
@@ -131,8 +132,8 @@ class _SignInPageState extends State<SignInPage> {
                   onPressed: () {
                     // Implement Google Sign In
                   },
-                  icon: Image.network(
-                    'https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg',
+                  icon: SvgPicture.asset( // <-- Use SvgPicture.asset
+                    'assets/image/google-icon-logo-svgrepo-com.svg',
                     height: 24,
                   ),
                   label: const Text(

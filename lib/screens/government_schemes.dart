@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../widgets/custom_app_bar.dart';
 
 class GovernmentSchemes extends StatelessWidget {
@@ -12,69 +12,88 @@ class GovernmentSchemes extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
+            const Text(
+              'Government Schemes for Farmers',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              'Explore a range of government schemes designed to support farmers. '
+              'Tap on any scheme to learn more, visit the official website, or watch a video guide.',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white70,
+                height: 1.5,
+              ),
+            ),
+            const SizedBox(height: 24),
           _buildSchemeCard(
             context,
             'PM-KISAN',
             'Income support of ₹6000 per year to farmer families',
             'https://pmkisan.gov.in/',
-            'https://youtu.be/example1',
-            'The PM-KISAN scheme aims to supplement the financial needs of land-holding farmers. The scheme provides income support of ₹6000 per year in three equal installments. The amount is directly transferred to the bank accounts of eligible farmer families.',
+            'https://youtu.be/jT3f_yDQPnc?si=kLYvVH7psHCMNIz_',
+            'The PM-KISAN scheme aims to supplement the financial needs of land-holding farmers...',
           ),
           _buildSchemeCard(
             context,
             'Kisan Credit Card',
             'Provides farmers with timely access to credit',
-            'https://www.nabard.org/content1.aspx?id=1720&catid=23&mid=23',
-            'https://youtu.be/example2',
-            'The Kisan Credit Card scheme provides farmers with timely access to credit. Farmers can use this credit for their agricultural needs, including purchase of inputs like seeds, fertilizers, etc.',
+            'https://sbi.co.in/web/agri-rural/agriculture-banking/crop-loan/kisan-credit-card',
+            'https://youtu.be/2mfa7-nfy2o?si=lQq6ORPtz9GeTSF1',
+            'The Kisan Credit Card scheme provides farmers with timely access to credit...',
           ),
           _buildSchemeCard(
             context,
             'PM Fasal Bima Yojana',
             'Crop insurance scheme for farmers',
             'https://pmfby.gov.in/',
-            'https://youtu.be/example3',
-            'PMFBY is a crop insurance scheme that provides comprehensive coverage against crop failure, helping farmers stabilize their income and ensure credit worthiness.',
+            'https://youtu.be/c13xywAIMAo?si=P5gcj2-zjC7mmCKF',
+            'PMFBY is a crop insurance scheme that provides comprehensive coverage against crop failure...',
           ),
           _buildSchemeCard(
             context,
             'National Mission for Sustainable Agriculture',
             'Promotes sustainable agriculture practices',
-            'https://nmsa.gov.in/',
-            'https://youtu.be/example4',
-            'NMSA aims to promote sustainable agriculture through climate change adaptation measures, water use efficiency, soil health management, and synergizing resource conservation.',
+            'https://nmsa.dac.gov.in/',
+            'https://youtu.be/DS_SMVvqzsg?si=paq7c7BLQWJb_Kgx',
+            'NMSA aims to promote sustainable agriculture through climate change adaptation measures...',
           ),
           _buildSchemeCard(
             context,
             'E-NAM',
             'National Agriculture Market',
-            'https://enam.gov.in/',
-            'https://youtu.be/example5',
-            'e-NAM is a pan-India electronic trading portal that networks existing APMC mandis to create a unified national market for agricultural commodities.',
+            'https://www.enam.gov.in/web/',
+            'https://youtu.be/oBEFYpnCNLA?si=z37bO4POmD9WjedW',
+            'e-NAM is a pan-India electronic trading portal that networks existing APMC mandis...',
           ),
           _buildSchemeCard(
             context,
             'Soil Health Card Scheme',
             'Promotes soil testing based fertilizer usage',
             'https://soilhealth.dac.gov.in/',
-            'https://youtu.be/example6',
-            'The Soil Health Card scheme provides information to farmers on nutrient status of their soil along with recommendations on appropriate dosage of nutrients for improving soil health and fertility.',
+            'https://youtu.be/SFKz_aEFfZw?si=_s-P7LbIy9yFhl7B',
+            'The Soil Health Card scheme provides information to farmers on nutrient status...',
           ),
           _buildSchemeCard(
             context,
             'PKVY',
             'Paramparagat Krishi Vikas Yojana',
-            'https://pgsindia-ncof.gov.in/',
-            'https://youtu.be/example7',
-            'PKVY promotes organic farming through adoption of organic village by cluster approach and PGS certification.',
+            'https://pgsindia-ncof.gov.in/pkvy/index.aspx',
+            'https://youtu.be/6YAKr0rYVzE?si=7BDuoiOJHxJW4AEY',
+            'PKVY promotes organic farming through adoption of organic village by cluster approach...',
           ),
           _buildSchemeCard(
             context,
             'Agriculture Infrastructure Fund',
             'Financing facility for agriculture infrastructure',
             'https://agriinfra.dac.gov.in/',
-            'https://youtu.be/example8',
-            'The Agriculture Infrastructure Fund provides medium-long term debt financing for investment in viable projects for post-harvest management infrastructure.',
+            'https://youtu.be/DwE-Z1ogJwM?si=Gid8ineYT3yiEiFE',
+            'The Agriculture Infrastructure Fund provides medium-long term debt financing...',
           ),
         ],
       ),
@@ -211,16 +230,30 @@ class GovernmentSchemes extends StatelessWidget {
                   ElevatedButton.icon(
                     icon: const Icon(Icons.link),
                     label: const Text('Visit Official Website'),
-                    onPressed: () {
-                      // Implement URL launcher
+                    onPressed: () async {
+                      final uri = Uri.parse(link);
+                      if (await canLaunchUrl(uri)) {
+                        await launchUrl(uri, mode: LaunchMode.externalApplication);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Could not open website')),
+                        );
+                      }
                     },
                   ),
                   const SizedBox(height: 12),
                   ElevatedButton.icon(
                     icon: const Icon(Icons.play_circle),
                     label: const Text('Watch Video Guide'),
-                    onPressed: () {
-                      // Implement video launcher
+                    onPressed: () async {
+                      final uri = Uri.parse(videoLink);
+                      if (await canLaunchUrl(uri)) {
+                        await launchUrl(uri, mode: LaunchMode.externalApplication);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Could not open video')),
+                        );
+                      }
                     },
                   ),
                 ],

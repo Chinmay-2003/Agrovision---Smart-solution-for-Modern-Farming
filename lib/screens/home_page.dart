@@ -9,6 +9,11 @@
   import '../widgets/custom_app_bar.dart';
   import '../widgets/custom_footer.dart';
   import 'crop_weed_detection.dart';
+  import 'dart:convert';
+  import 'package:http/http.dart' as http;
+  import 'package:geolocator/geolocator.dart';
+  import 'SoilAnalyzerPage.dart';
+  import 'krish.dart';
 
   class HomePage extends StatefulWidget {
     final String username;
@@ -23,11 +28,15 @@
     late String _timeString;
     final TextEditingController _feedbackController = TextEditingController();
     final List<UserFeedback> _feedbacks = [];
+    String? _temperature;
+    String? _humidity;
+    String? _weatherCondition;
     
     @override
     void initState() {
       super.initState();
       _timeString = _formatDateTime(DateTime.now());
+      _getWeather();
       Stream.periodic(const Duration(minutes: 1)).listen((_) {
         setState(() {
           _timeString = _formatDateTime(DateTime.now());
@@ -51,32 +60,117 @@
         });
       }
     }
+    Future<void> _getWeather() async {
+      bool serviceEnabled;
+      LocationPermission permission;
+
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) return;
+
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) return;
+      }
+
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+      String apiKey = '140043d3483e848ba2cc6ad1aa036e56'; // 🔑 Replace with your real API key
+      String url =
+          'https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&units=metric&appid=$apiKey';
+
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          _temperature = data['main']['temp'].toString();
+          _humidity = data['main']['humidity'].toString();
+          _weatherCondition = data['weather'][0]['main'];
+        });
+      }
+    }
 
     @override
     Widget build(BuildContext context) {
       return Scaffold(
-        appBar: CustomAppBar(
-          title: 'Agrovision',
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfilePage(username: widget.username),
-                  ),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(70),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFF8E2DE2),
+                  Color(0xFF4A00E0),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.purple.withOpacity(0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
                 ),
-                child: Hero(
-                  tag: 'profile',
-                  child: CircleAvatar(
-                    backgroundColor: Colors.purple[200],
-                    child: const Icon(Icons.person, color: Colors.white),
-                  ),
+              ],
+            ),
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // 🌾 Gradient Title
+                    ShaderMask(
+                      shaderCallback: (bounds) => const LinearGradient(
+                        colors: [Colors.white, Colors.purpleAccent],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds),
+                      child: const Text(
+                        'Agrovision',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white, // Required for ShaderMask
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    ),
+
+                    // 👤 Glowing Profile Button
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfilePage(username: widget.username),
+                        ),
+                      ),
+                      child: Hero(
+                        tag: 'profile',
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.purpleAccent.withOpacity(0.6),
+                                blurRadius: 12,
+                                spreadRadius: 2,
+                              ),
+                            ],
+                          ),
+                          child: CircleAvatar(
+                            radius: 22,
+                            backgroundColor: Colors.purple[300],
+                            child: const Icon(Icons.person, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
+          ),
         ),
 
         body: Stack(
@@ -112,8 +206,9 @@
                   const SizedBox(height: 24),
                   // Hello and Username with Farmer Image
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      // Left Side: Greeting + Username
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,68 +217,43 @@
                               'Hello!',
                               style: TextStyle(
                                 fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 8),
-                          ShaderMask(
-                            shaderCallback: (bounds) => const LinearGradient(
-                              colors: [
-                                Colors.purple,
-                                Colors.blue,
-                                Colors.green,
-                              ],
-                            ).createShader(bounds),
-                            child: Column( // Wrap with Column for multiple children
-                              children: [
-                                Text(
-                                  widget.username,
-                                  style: const TextStyle(
-                                    fontSize: 40,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                            const SizedBox(height: 8),
+                            ShaderMask(
+                              shaderCallback: (bounds) => const LinearGradient(
+                                colors: [
+                                  Color.fromARGB(255, 209, 52, 236),
+                                  Color.fromARGB(255, 72, 173, 255),
+                                  Colors.green,
+                                ],
+                              ).createShader(bounds),
+                              child: Text(
+                                widget.username,
+                                style: const TextStyle(
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
-                                const SizedBox(height: 8), // Now correctly placed
-                                ShaderMask(
-                                  shaderCallback: (bounds) => const LinearGradient(
-                                    colors: [
-                                      Colors.purple,
-                                      Colors.blue,
-                                      Colors.green,
-                                    ],
-                                  ).createShader(bounds),
-                                  child: Text(
-                                    widget.username,
-                                    style: const TextStyle(
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),  
-                        ],
-                
-                      ),
-                    ),
-                      Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(0, 66, 66, 66),
-                          ///borderRadius: BorderRadius.circular(12),
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/home.png'), // Use your image path
-                            fit: BoxFit.cover, // Adjust the fit
-                          ),
+                          ],
                         ),
-                      )
+                      ),
+
+                      // Right Side: Full Image without styling
+                      Image.asset(
+                        'assets/images/home.png',
+                        width: 200,
+                        height: 120,
+                        fit: BoxFit.cover,
+                      ),
                     ],
                   ),
+
+
                   const SizedBox(height: 32),
                   // App Logo and Description
                   Center(
@@ -251,24 +321,187 @@
                       ],
                     ),
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 28),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900],
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.purple.withOpacity(0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                    margin: const EdgeInsets.symmetric(vertical: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ShaderMask(
+                          shaderCallback: (Rect bounds) {
+                            return const LinearGradient(
+                              colors: [Colors.purple, Colors.deepPurpleAccent],
+                            ).createShader(bounds);
+                          },
+                          child: const Text(
+                            '💬 Ask Krish',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white, // Masked by gradient
+                            ),
+                          ),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const krish()),
+                            );
+                          },
+                          icon: const Icon(Icons.chat_rounded, size: 20),
+                          label: const Text(
+                            "Chat Now",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.purpleAccent.shade400,
+                            foregroundColor: Colors.white,
+                            elevation: 8,
+                            shadowColor: Colors.purpleAccent,
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+
+                  const SizedBox(height: 32),
+
+                  if (_temperature != null && _humidity != null)
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.purple.withOpacity(0.3),
+                            Colors.deepPurple.withOpacity(0.2),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.purple.withOpacity(0.25),
+                            blurRadius: 12,
+                            spreadRadius: 1,
+                            offset: const Offset(0, 8),
+                          ),
+                        ],
+                        border: Border.all(
+                          color: Colors.purple.withOpacity(0.4),
+                          width: 1.2,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Row(
+                            children: [
+                              Icon(Icons.wb_sunny_outlined, color: Colors.amberAccent, size: 24),
+                              SizedBox(width: 8),
+                              Text(
+                                'Live Weather Conditions',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 4,
+                                      color: Colors.purpleAccent,
+                                      offset: Offset(0, 1),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            children: [
+                              Icon(Icons.thermostat_outlined, color: Colors.redAccent.shade100),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Temperature: $_temperature°C',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white70,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              Icon(Icons.water_drop_outlined, color: Colors.lightBlueAccent),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Humidity: $_humidity%',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white70,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              Icon(Icons.cloud_outlined, color: Colors.grey.shade400),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Condition: $_weatherCondition',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white70,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  const SizedBox(height: 32),
+
                   // Feature Buttons
-                  ...['Crop & Weed Detection', 'Crop Recommendation', 'Fertilizers & Pesticides', 'Government Schemes']
+                  ...['Crop & Weed Detection', 'Crop Recommendation', 'Fertilizers & Pesticides', 'Government Schemes',  'Soil Health Analyzer']
                       .asMap()
                       .entries
                       .map((entry) {
-                    final icons = [Icons.camera_alt, Icons.grass, Icons.science, Icons.policy];
+                    final icons = [Icons.camera_alt, Icons.grass, Icons.science, Icons.policy, Icons.eco];
                     final routes = [
-                      const CropWeedDetection(),
+                      const CropWeedDetectionApp(),
                       const CropRecommendation(),
                       const FertilizersPesticides(),
-                      const GovernmentSchemes()
+                      const GovernmentSchemes(),
+                      const SoilAnalyzerPage()
                     ];
                     final descriptions = [
                       'Detect weeds and crops in youur field',
                       'Get AI-powered crop suggestions',
                       'Find the right products for your crops',
-                      'Explore available farming schemes'
+                      'Explore available farming schemes',
+                      'Analyze soil & get expert suggestions'
                     ];
                     
                     return Padding(
@@ -473,7 +706,7 @@
     @override
     void paint(Canvas canvas, Size size) {
       final paint = Paint()
-        ..color = const Color(0xFF4A148C).withOpacity(0.15)
+        ..color = const Color(0xFF4A148C).withOpacity(0)
         ..style = PaintingStyle.fill;
 
       final path1 = Path()

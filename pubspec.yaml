@@ -22,6 +22,17 @@ dependencies:
   path_provider: 
   path:
   file_selector: ^1.0.3
+  json_annotation: ^4.8.1
+  geolocator: ^10.1.0
+  # Downgraded to a compatible version
+  flutter_local_notifications: ^16.1.0
+  timezone: ^0.9.2
+  # flutter_sound: ^8.4.6  # Removed flutter_sound dependency
+  permission_handler: ^11.3.0
+
+  google_fonts: ^6.1.0
+  url_launcher: ^6.2.5
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -37,3 +48,5 @@ flutter:
     - assets/images/crop1.png
     - assets/images/home.png
     - assets/plant_data.json
+    - assets/xyz.jpg
+    - assets/image/google-icon-logo-svgrepo-com.svg
