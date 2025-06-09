@@ -17,15 +17,15 @@ class AgrovisionApp extends StatelessWidget {
     return MaterialApp(
       title: 'Agrovision',
       theme: ThemeData(
-        primaryColor: Colors.purple,
-        scaffoldBackgroundColor: Colors.black,
+        primaryColor: Colors.green,
+        scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.purple,
+          backgroundColor: Colors.green,
           elevation: 0,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.purple,
+            backgroundColor: Colors.green,
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
             shape: RoundedRectangleBorder(
@@ -35,23 +35,23 @@ class AgrovisionApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.robotoTextTheme(
           Theme.of(context).textTheme,
-        ).apply(bodyColor: Colors.white), // 👈 Apply white color globally
+        ).apply(bodyColor: Colors.black), // 👈 Apply black color globally
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: Colors.grey[900],
+          fillColor: Colors.green[50],
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.purple, width: 1),
+            borderSide: const BorderSide(color: Colors.green, width: 1),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.purple, width: 2),
+            borderSide: const BorderSide(color: Colors.green, width: 2),
           ),
-          labelStyle: const TextStyle(color: Colors.white70),
+          labelStyle: const TextStyle(color: Colors.black54),
         ),
       ),
       home: const StartPage(),

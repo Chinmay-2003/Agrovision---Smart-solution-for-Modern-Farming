@@ -1,0 +1,98 @@
+{
+  "0": {
+    "name": "Maize",
+    "description": "A widely cultivated cereal crop known for its kernels used as food and animal feed."
+  },
+  "1": {
+    "name": "Sugar beet",
+    "description": "A root crop used for sugar production and livestock feed."
+  },
+  "2": {
+    "name": "Soy",
+    "description": "A legume rich in protein, commonly used in food, oil, and animal feed."
+  },
+  "3": {
+    "name": "Sunflower",
+    "description": "A tall crop grown for its seeds and oil with bright yellow flowers."
+  },
+  "4": {
+    "name": "Potato",
+    "description": "A tuber crop widely used as a staple food, rich in starch."
+  },
+  "5": {
+    "name": "Pea",
+    "description": "A legume producing edible green seeds often consumed fresh or dried."
+  },
+  "6": {
+    "name": "Bean",
+    "description": "A leguminous plant with edible seeds, rich in protein and fiber."
+  },
+  "7": {
+    "name": "Pumpkin",
+    "description": "A fruit crop used in cooking and baking, also grown for livestock feed."
+  },
+  "8": {
+    "name": "Grasses",
+    "description": "Monocotyledonous plants that include pasture and forage species."
+  },
+  "9": {
+    "name": "Amaranth",
+    "description": "A fast-growing weed or pseudo-cereal crop, often invasive in fields."
+  },
+  "10": {
+    "name": "Goosefoot",
+    "description": "A broadleaf weed that competes with crops for light and nutrients."
+  },
+  "11": {
+    "name": "Knotweed",
+    "description": "A persistent and invasive weed, difficult to control in crop systems."
+  },
+  "12": {
+    "name": "Corn spurry",
+    "description": "A small-seeded weed found in cereal fields, reducing crop yields."
+  },
+  "13": {
+    "name": "Chickweed",
+    "description": "A soft-stemmed weed found in cultivated fields and gardens."
+  },
+  "14": {
+    "name": "Solanales",
+    "description": "A plant order including nightshades and weedy species like black nightshade."
+  },
+  "15": {
+    "name": "Potato weed",
+    "description": "A common weed species found in potato and vegetable crops."
+  },
+  "16": {
+    "name": "Chamomile",
+    "description": "An aromatic plant, sometimes a weed in cereal crops."
+  },
+  "17": {
+    "name": "Thistle",
+    "description": "A spiny weed that aggressively competes with crops and reduces yields."
+  },
+  "18": {
+    "name": "Mercuries",
+    "description": "A group of broadleaf weeds toxic to livestock and troublesome in crops."
+  },
+  "19": {
+    "name": "Geranium",
+    "description": "A flowering plant species; some types act as crop-invading weeds."
+  },
+  "20": {
+    "name": "Crucifer",
+    "description": "Includes mustard-family weeds like wild radish; competes with crops."
+  },
+  "21": {
+    "name": "Poppy",
+    "description": "A weed with bright flowers, often found in cereal and legume fields."
+  },
+  "22": {
+    "name": "Plantago",
+    "description": "A ground-hugging weed that competes with crops in low-growing systems."
+  },
+  "23": {
+    "name": "Labiate",
+    "description": "A family of aromatic herbs; some species act as competitive weeds."
+  }
+}

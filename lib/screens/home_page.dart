@@ -8,7 +8,8 @@
   import 'profile_page.dart';
   import '../widgets/custom_app_bar.dart';
   import '../widgets/custom_footer.dart';
-  import 'crop_weed_detection.dart';
+  import 'crop_detection.dart';
+  //import 'crop_weed_detection.dart';
   import 'dart:convert';
   import 'package:http/http.dart' as http;
   import 'package:geolocator/geolocator.dart';
@@ -490,7 +491,8 @@
                       .map((entry) {
                     final icons = [Icons.camera_alt, Icons.grass, Icons.science, Icons.policy, Icons.eco];
                     final routes = [
-                      const CropWeedDetectionApp(),
+                      //DetectionScreen(),
+                      const CropDetectionPage(),
                       const CropRecommendation(),
                       const FertilizersPesticides(),
                       const GovernmentSchemes(),

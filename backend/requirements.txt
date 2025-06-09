@@ -1,0 +1,5 @@
+flask
+flask-cors
+ultralytics==8.1.23
+Pillow
+gunicorn
